@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private WifiManager mWifiManager;
     private ListView mListView;
+    private ScanResultListAdapter mAdapter;
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -40,10 +41,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mListView = findViewById(R.id.wifi_list);
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         //TODO ScanResultListAdapterを作っちゃう
+        mAdapter = new ScanResultListAdapter(this, new ArrayList<ScanResult>());
 
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, WifiInputActivity.class);
+                //TODOデータ受けたし
+                ScanResult item = mAdapter.getItem(position);
+                intent.putExtra(WifiInputActivity.KEY_WIFI_DATA, item);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -75,26 +90,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("スキャン成功","スキャン成功");
         List<ScanResult> results = mWifiManager.getScanResults();
 
-        final ArrayList<String> wifiNameList = new ArrayList<>();
-
-        for(ScanResult result : results) {
-            wifiNameList.add(result.SSID);
-        }
-
-        ArrayAdapter<String> wifiList = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, wifiNameList);
-
-        mListView = findViewById(R.id.wifi_list);
-        mListView.setAdapter(wifiList);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, WifiInputActivity.class);
-                intent.putExtra("WifiSSID", wifiNameList.get(position));
-                startActivity(intent);
-            }
-        });
+        mAdapter.clear();
+        mAdapter.addAll(results);
+        mAdapter.notifyDataSetChanged();
 
     }
 
