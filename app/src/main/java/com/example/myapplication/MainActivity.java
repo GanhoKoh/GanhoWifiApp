@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        //TODO ScanResultListAdapterを作っちゃう
+
     }
 
     @Override
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         List<ScanResult> results = mWifiManager.getScanResults();
 
         final ArrayList<String> wifiNameList = new ArrayList<>();
+
         for(ScanResult result : results) {
             wifiNameList.add(result.SSID);
         }
