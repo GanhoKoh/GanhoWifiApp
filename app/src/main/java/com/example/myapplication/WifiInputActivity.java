@@ -34,7 +34,7 @@ public class WifiInputActivity extends AppCompatActivity {
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         mTextView = findViewById(R.id.wifi_name_txt);
-        mTextView.setText(mScanResult != null ? mScanResult.SSID : "");
+        mTextView.setText(mScanResult == null ? "" : mScanResult.SSID);
 
         mConnectBtn = findViewById(R.id.connect_bttn);
         mConnectBtn.setOnClickListener(new View.OnClickListener() {
@@ -56,9 +56,9 @@ public class WifiInputActivity extends AppCompatActivity {
                     //コネクトニ成功したらWifiの強度表示画面へ
                     toast = Toast.makeText(WifiInputActivity.this, "接続に成功しました", Toast.LENGTH_SHORT);
                     toast.show();
+                    //WifiMeterアクティビティに情報を渡してインテントする
                     Intent intent = new Intent(WifiInputActivity.this, WifiMeterActivity.class);
                     startActivity(intent);
-
                 } else {
                     toast = Toast.makeText(WifiInputActivity.this, "接続に失敗しました", Toast.LENGTH_SHORT);
                     toast.show();

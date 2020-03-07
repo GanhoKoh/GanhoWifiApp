@@ -8,27 +8,36 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WifiMeterActivity extends AppCompatActivity {
 
     WifiInfo mWifiInfo;
-    TextView mSsidName;
-    TextView mRssi;
+    Timer mTimer;
+    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_meter);
 
+        mHandler = new Handler();
+
+        mTimer = new Timer();
         //接続されている前提なので、その情報を取得する
-        mWifiInfo = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getConnectionInfo();
 
-        //表示用ビューを用意する
-        mSsidName = findViewById(R.id.ssid_name);
-        mRssi = findViewById(R.id.rssi_txt);
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mWifiInfo = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getConnectionInfo();
+                Log.d("mWifiInfo", String.valueOf(mWifiInfo.getRssi()));
+            }
+        }, 1000, 1000);
 
-        mSsidName.setText(mWifiInfo.getSSID());
-        mRssi.setText(mWifiInfo.getRssi());
     }
 }

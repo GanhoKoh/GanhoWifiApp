@@ -56,9 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 ScanResult item = mAdapter.getItem(position);
                 intent.putExtra(WifiInputActivity.KEY_WIFI_DATA, item);
                 startActivity(intent);
-
             }
         });
+
+        
+
+
     }
 
     @Override
