@@ -91,7 +91,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void scanSuccess() {
         Log.d("スキャン成功","スキャン成功");
-        List<ScanResult> results = mWifiManager.getScanResults();
+        List<ScanResult> preResults = mWifiManager.getScanResults();
+        List<String> resultsSsidList = new ArrayList<String>();
+        List<ScanResult> results = new ArrayList<ScanResult>();
+
+        //SSIDが空のScanresultを削除する
+        for(int i = 0; i < preResults.size(); i++) {
+            if(preResults.get(i).SSID.isEmpty()) {
+                preResults.remove(i);
+            }
+        }
+
+
+        for(ScanResult preResult : preResults) {
+            ScanResult targetResult = preResult;
+            if(resultsSsidList.contains(targetResult.SSID)) continue;
+            for(ScanResult _preResult : preResults) {
+                if(preResult.SSID.equals(_preResult.SSID)) {
+                    if(targetResult.timestamp < _preResult.timestamp) {
+                        targetResult = _preResult;
+                    }
+                }
+            }
+            results.add(targetResult);
+            resultsSsidList.add(targetResult.SSID);
+        }
+
+        for(ScanResult result : results) {
+            Log.d("result.ssid", result.SSID);
+        }
 
         mAdapter.clear();
         mAdapter.addAll(results);
@@ -102,5 +130,6 @@ public class MainActivity extends AppCompatActivity {
     private void  scanFailure() {
         Log.d(mWifiManager.getClass().getSimpleName(), "失敗");
     }
+
 
 }
