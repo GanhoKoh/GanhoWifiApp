@@ -130,6 +130,4 @@ public class MainActivity extends AppCompatActivity {
     private void  scanFailure() {
         Log.d(mWifiManager.getClass().getSimpleName(), "失敗");
     }
-
-
 }
