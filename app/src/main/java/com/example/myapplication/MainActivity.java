@@ -51,16 +51,13 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, WifiInputActivity.class);
+                Intent intent = new Intent(MainActivity.this, WifiMeterActivity.class);
                 //TODOデータ受けたし
-                ScanResult item = mAdapter.getItem(position);
-                intent.putExtra(WifiInputActivity.KEY_WIFI_DATA, item);
+                //ScanResult item = mAdapter.getItem(position);
+                //intent.putExtra(WifiInputActivity.KEY_WIFI_DATA, item);
                 startActivity(intent);
             }
         });
-
-        
-
 
     }
 

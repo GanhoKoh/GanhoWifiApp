@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.ntt.customgaugeview.library.GaugeView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -23,6 +25,8 @@ public class WifiMeterActivity extends AppCompatActivity {
 
     private static final int MIN_RSSI = -100;
     private static final int MAX_RSSI = 0;
+
+    private GaugeView mGaugeView;
 
     private WifiInfo mWifiInfo;
     private WifiManager mWifiManager;
@@ -45,9 +49,11 @@ public class WifiMeterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_meter);
+        this.mGaugeView = findViewById(R.id.gauge_view);
+        mGaugeView.setShowRangeValues(true);
+        mGaugeView.setTargetValue(0);
 
         mHandler = new Handler();
-
 
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
@@ -56,7 +62,6 @@ public class WifiMeterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
@@ -110,7 +115,24 @@ public class WifiMeterActivity extends AppCompatActivity {
         }
 
         mWifiInfo = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE)).getConnectionInfo();
-        int level = calculateSignalLevel(mWifiInfo.getRssi());
+        final int level = calculateSignalLevel(mWifiInfo.getRssi());
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                mHandler.post(new Runnable() {
+                runOnUiThread(new Runnable() {
+                                  @Override
+                                  public void run() {
+                                     mGaugeView.setTargetValue(level);
+                                  }
+                              }
+                );
+//            }
+//        }).start();
+
+//        mGaugeView.setTargetValue(level);
+
         Log.d("mWifiInfo.変換前", String.valueOf(mWifiInfo.getRssi()));
         Log.d("mWifiInfo.返還後", String.valueOf(level));
     }

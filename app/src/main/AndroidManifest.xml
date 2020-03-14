@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".WifiInputActivity" />
-        <activity android:name=".WifiMeterActivity"/>
+        <activity android:name=".WifiMeterActivity">
+        </activity>
         <activity android:name=".MainActivity" />
     </application>
 
