@@ -9,7 +9,6 @@
     tools:context=".WifiMeterActivity"
     android:orientation="vertical">
 
-
     <com.ntt.customgaugeview.library.GaugeView
         android:id="@+id/gauge_view"
         android:layout_width="wrap_content"
@@ -23,7 +22,7 @@
         gauge:showInnerRim="false"
         gauge:showNeedle="true"
         gauge:showOuterBorder="false"
-        gauge:showOuterRim="true"
+        gauge:showOuterRim="false"
         gauge:showOuterShadow="false"
         gauge:showRangeText="true"
         gauge:showRanges="true"
@@ -39,6 +38,5 @@
         android:text="戻る"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="30dp"/>
-
 
 </FrameLayout>

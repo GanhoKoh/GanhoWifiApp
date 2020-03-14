@@ -52,13 +52,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, WifiMeterActivity.class);
-                //TODOデータ受けたし
-                //ScanResult item = mAdapter.getItem(position);
-                //intent.putExtra(WifiInputActivity.KEY_WIFI_DATA, item);
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -71,9 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         boolean success = mWifiManager.startScan();
         if(success) {
-            WifiManagerHolder wifiManagerHolder = WifiManagerHolder.getInstance();
-            wifiManagerHolder.setWifiManager(mWifiManager);
-            wifiManagerHolder.setBroadcastReceiver(mBroadcastReceiver);
+            scanSuccess();
         } else {
             scanFailure();
         }
@@ -98,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                 preResults.remove(i);
             }
         }
-
 
         for(ScanResult preResult : preResults) {
             ScanResult targetResult = preResult;
