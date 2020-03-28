@@ -71,6 +71,7 @@ public class SplashActivity extends AppCompatActivity {
                                 finish();
                             }
                         });
+                builder.setCancelable(false);
                 builder.show();
             }
 
