@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.dialogs.NotExecutable;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -57,6 +61,17 @@ public class SplashActivity extends AppCompatActivity {
                 moveToNext();
             } else {
                 //許可がないと実行できないよの処理
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("アプリを起動するのには、位置情報の許可が必須です。");
+                builder.setNegativeButton("アプリを終了",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //クリックしたときの処理
+                                finish();
+                            }
+                        });
+                builder.show();
             }
 
         }
