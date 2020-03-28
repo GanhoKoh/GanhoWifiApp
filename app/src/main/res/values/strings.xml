@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GanhoWifiApp</string>
+    <string name="app_name">HowSignalWifi?</string>
     <string name="connect_button">Wifiに接続</string>
     <string-array name="speedRangeValues">
         <item>0</item>
