@@ -30,7 +30,6 @@ public class WifiMeterActivity extends AppCompatActivity {
     private static final int MAX_RSSI = 0;
 
     private GaugeView mGaugeView;
-    private Button mConnectWifiBtn;
     private Button mReturnBtn;
     private Timer mTimer;
 
@@ -47,16 +46,6 @@ public class WifiMeterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-
-        mConnectWifiBtn = findViewById(R.id.connect_wifi_btn);
-        mConnectWifiBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //WifiInputActivityに情報を渡してインテントする
-                Intent intent = new Intent(WifiMeterActivity.this, WifiInputActivity.class);
-                startActivity(intent);
             }
         });
 
