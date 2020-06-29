@@ -54,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 InputDialog inputDialog = new InputDialog();
+                Bundle args = new Bundle();
+                ScanResult item = mAdapter.getItem(position);
+                if(item != null) {
+                    args.putString("ssid", item.SSID);
+                    inputDialog.setArguments(args);
+                }
                 inputDialog.show(getSupportFragmentManager(), "inputDialog");
             }
         });
