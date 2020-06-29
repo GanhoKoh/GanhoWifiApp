@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.dialogs.InputDialog;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this, WifiMeterActivity.class);
-                startActivity(intent);
+                InputDialog inputDialog = new InputDialog();
+                inputDialog.show(getSupportFragmentManager(), "inputDialog");
             }
         });
     }
