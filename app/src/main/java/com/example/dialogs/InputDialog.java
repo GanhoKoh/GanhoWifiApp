@@ -2,6 +2,7 @@ package com.example.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
@@ -69,6 +70,7 @@ public class InputDialog extends DialogFragment {
     }
 
     private boolean connectWifi(String ssid, String password) {
+        mWifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiConfiguration wc = new WifiConfiguration();
         wc.SSID = "\"" + ssid + "\"";
         wc.status = WifiConfiguration.Status.ENABLED;
